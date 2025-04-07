@@ -1,24 +1,23 @@
-এই টুলটি রান করতে আপনাকে কিছু কমান্ড ব্যবহার করতে হবে। নিচে সেগুলি দেওয়া হলো:
+Here is a simple `README.md` file with the necessary commands:
 
-1. **প্রথমে রিপোজিটরি ক্লোন করুন:**
+```markdown
+# DDoS Tool
 
-   টার্মাক্স (Termux) বা আপনার লিনাক্স সিস্টেমে নিচের কমান্ডটি চালিয়ে রিপোজিটরি ক্লোন করুন:
+## How to Run
+
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/mehedi-x/ddos/
    ```
 
-2. **প্রোজেক্ট ফোল্ডারে যান:**
-
-   রিপোজিটরি ক্লোন করার পর, টুলের ফোল্ডারে যেতে হবে:
+2. **Navigate to the project folder:**
 
    ```bash
    cd ddos
    ```
 
-3. **টার্মাক্স আপডেট এবং ডিপেনডেন্সি ইনস্টল করুন:**
-
-   টুল রান করার জন্য কিছু প্যাকেজ ইনস্টল করতে হবে। নিচের কমান্ডগুলি ব্যবহার করুন:
+3. **Update Termux and install dependencies:**
 
    ```bash
    pkg update
@@ -27,29 +26,24 @@
    pip install requests colorama fake-useragent aiohttp pysocks
    ```
 
-4. **স্ক্রিপ্ট ফাইল তৈরি করুন:**
-
-   যদি আপনি `ddos_tool.py` ফাইল তৈরি করতে চান, তাহলে নিচের কমান্ডটি ব্যবহার করুন:
+4. **Create the script file (if needed):**
 
    ```bash
    nano ddos_tool.py
    ```
 
-   এরপর কোডটি পেস্ট করুন এবং ফাইলটি সেভ করুন।
+   Paste the code and save the file.
 
-5. **টুল রান করুন:**
-
-   এখন স্ক্রিপ্ট রান করার জন্য নিচের কমান্ডটি ব্যবহার করুন:
+5. **Run the tool:**
 
    ```bash
    python ddos_tool.py
    ```
 
-6. **লগিন করুন:**
-
-   আপনি টুলের মধ্যে লগিন করার জন্য নিম্নলিখিত ডিফল্ট ক্রিডেনশিয়াল ব্যবহার করতে পারেন:
+6. **Login with default credentials:**
 
    - **Username:** `MEHEDI`
    - **Password:** `CPDDOS`
+```
 
-এইভাবে আপনি টুলটি রান করতে পারবেন।
+This should work for running the DDoS tool and includes all the necessary steps and commands.
