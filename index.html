@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stacked Popup Video Launcher</title>
+    <title>Popup Launcher</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -10,7 +10,7 @@
             color: #0f0;
             font-family: monospace;
             text-align: center;
-            padding: 50px 20px;
+            padding: 20px;
         }
 
         input, button {
@@ -30,41 +30,58 @@
 
         .popup {
             position: fixed;
+            width: 50vw;
+            height: 50vh;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1);
-            width: 90%;
-            max-width: 500px;
+            transform: translate(-50%, -50%);
             background: #111;
             border: 2px solid #0f0;
             z-index: 9999;
-            padding: 10px;
             box-shadow: 0 0 20px #0f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .popup video,
         .popup iframe {
             width: 100%;
-            height: auto;
+            height: 100%;
+            border: none;
+            flex-grow: 1;
         }
 
         .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            color: #0f0;
-            font-size: 18px;
+            background: #0f0;
+            color: #000;
+            font-weight: bold;
             cursor: pointer;
+            padding: 5px;
+        }
+
+        #popupCount {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #0f0;
         }
     </style>
 </head>
 <body>
     <h1>Stacked Popup Launcher</h1>
     <input type="text" id="link" placeholder="Enter Link">
-    <input type="number" id="count" placeholder="How Many Popups?">
+    <input type="number" id="count" placeholder="Number of Popups">
     <button onclick="openPopups()">Open Popups</button>
 
+    <div id="popupCount">Popups: 0</div>
+
     <script>
+        let currentPopups = 0;
+
+        function updatePopupCount() {
+            document.getElementById('popupCount').innerText = `Popups: ${currentPopups}`;
+        }
+
         function openPopups() {
             const url = document.getElementById('link').value.trim();
             const count = parseInt(document.getElementById('count').value);
@@ -85,8 +102,12 @@
 
             const closeBtn = document.createElement('div');
             closeBtn.className = 'close-btn';
-            closeBtn.innerHTML = '✖';
-            closeBtn.onclick = () => popup.remove();
+            closeBtn.innerText = '✖ Close';
+            closeBtn.onclick = () => {
+                popup.remove();
+                currentPopups--;
+                updatePopupCount();
+            };
 
             let isVideo = url.match(/\.(mp4|webm|ogg)$/i);
             let content;
@@ -101,12 +122,14 @@
                 content = document.createElement('iframe');
                 content.src = url;
                 content.allow = "autoplay";
-                content.frameBorder = "0";
             }
 
             popup.appendChild(closeBtn);
             popup.appendChild(content);
             document.body.appendChild(popup);
+
+            currentPopups++;
+            updatePopupCount();
         }
     </script>
 </body>
