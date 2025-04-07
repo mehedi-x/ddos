@@ -1,136 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Popup Launcher</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background-color: #000;
-            color: #0f0;
-            font-family: monospace;
-            text-align: center;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <title>Smart Popup Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      padding: 20px;
+      text-align: center;
+    }
 
-        input, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-            background-color: #111;
-            color: #0f0;
-            border: 1px solid #0f0;
-        }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      background: #111;
+      color: #0f0;
+      border: 1px solid #0f0;
+    }
 
-        button:hover {
-            background-color: #0f0;
-            color: #000;
-            cursor: pointer;
-        }
+    button:hover {
+      background: #0f0;
+      color: #000;
+      cursor: pointer;
+    }
 
-        .popup {
-            position: fixed;
-            width: 50vw;
-            height: 50vh;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #111;
-            border: 2px solid #0f0;
-            z-index: 9999;
-            box-shadow: 0 0 20px #0f0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    .popup {
+      position: fixed;
+      width: 50vw;
+      height: 50vh;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      border: 2px solid #0f0;
+      z-index: 9999;
+      box-shadow: 0 0 20px #0f0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .popup video,
-        .popup iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            flex-grow: 1;
-        }
+    .popup iframe, .popup video {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex-grow: 1;
+    }
 
-        .close-btn {
-            background: #0f0;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-        }
+    .close-btn {
+      background: #0f0;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 5px;
+    }
 
-        #popupCount {
-            font-size: 18px;
-            margin-top: 20px;
-            color: #0f0;
-        }
-    </style>
+    #popupCount {
+      font-size: 18px;
+    }
+
+    .loader {
+      border: 4px solid #333;
+      border-top: 4px solid #0f0;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-    <h1>Stacked Popup Launcher</h1>
-    <input type="text" id="link" placeholder="Enter Link">
-    <input type="number" id="count" placeholder="Number of Popups">
-    <button onclick="openPopups()">Open Popups</button>
+  <h1>Smart Popup Player</h1>
+  <input type="text" id="link" placeholder="Paste any link">
+  <input type="number" id="count" placeholder="Popup count">
+  <button onclick="openPopups()">Open Popups</button>
+  <div id="popupCount">Popups: 0</div>
 
-    <div id="popupCount">Popups: 0</div>
+  <script>
+    let currentPopups = 0;
 
-    <script>
-        let currentPopups = 0;
+    function updatePopupCount() {
+      document.getElementById('popupCount').innerText = `Popups: ${currentPopups}`;
+    }
 
-        function updatePopupCount() {
-            document.getElementById('popupCount').innerText = `Popups: ${currentPopups}`;
-        }
+    function openPopups() {
+      const rawUrl = document.getElementById('link').value.trim();
+      const count = parseInt(document.getElementById('count').value);
 
-        function openPopups() {
-            const url = document.getElementById('link').value.trim();
-            const count = parseInt(document.getElementById('count').value);
+      if (!rawUrl || isNaN(count) || count < 1) {
+        alert("Please enter valid link and popup number.");
+        return;
+      }
 
-            if (!url || isNaN(count) || count < 1) {
-                alert('Please enter a valid link and number.');
-                return;
-            }
+      for (let i = 0; i < count; i++) {
+        createPopup(rawUrl);
+      }
+    }
 
-            for (let i = 0; i < count; i++) {
-                createPopup(url);
-            }
-        }
+    function createPopup(url) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
 
-        function createPopup(url) {
-            const popup = document.createElement('div');
-            popup.className = 'popup';
+      const closeBtn = document.createElement('div');
+      closeBtn.className = 'close-btn';
+      closeBtn.innerText = '✖ Close';
+      closeBtn.onclick = () => {
+        popup.remove();
+        currentPopups--;
+        updatePopupCount();
+      };
 
-            const closeBtn = document.createElement('div');
-            closeBtn.className = 'close-btn';
-            closeBtn.innerText = '✖ Close';
-            closeBtn.onclick = () => {
-                popup.remove();
-                currentPopups--;
-                updatePopupCount();
-            };
+      const loader = document.createElement('div');
+      loader.className = 'loader';
 
-            let isVideo = url.match(/\.(mp4|webm|ogg)$/i);
-            let content;
+      popup.appendChild(closeBtn);
+      popup.appendChild(loader);
+      document.body.appendChild(popup);
 
-            if (isVideo) {
-                content = document.createElement('video');
-                content.src = url;
-                content.autoplay = true;
-                content.muted = true;
-                content.controls = true;
-            } else {
-                content = document.createElement('iframe');
-                content.src = url;
-                content.allow = "autoplay";
-            }
+      currentPopups++;
+      updatePopupCount();
 
-            popup.appendChild(closeBtn);
-            popup.appendChild(content);
-            document.body.appendChild(popup);
+      setTimeout(() => {
+        popup.removeChild(loader);
+        const embedUrl = convertToEmbed(url);
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.allow = "autoplay";
+        popup.appendChild(iframe);
+      }, 1500); // simulate loading time
+    }
 
-            currentPopups++;
-            updatePopupCount();
-        }
-    </script>
+    function convertToEmbed(url) {
+      if (url.includes("youtube.com/watch?v=")) {
+        const videoId = url.split("v=")[1].split("&")[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (url.includes("youtu.be/")) {
+        const videoId = url.split("youtu.be/")[1];
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (url.includes("tiktok.com")) {
+        const match = url.match(/video\/(\d+)/);
+        if (match) return `https://www.tiktok.com/embed/v2/${match[1]}`;
+      }
+
+      if (url.includes("facebook.com")) {
+        return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}`;
+      }
+
+      if (url.includes("instagram.com/p/")) {
+        return `${url}embed`;
+      }
+
+      return url; // fallback for other sites
+    }
+  </script>
 </body>
 </html>
