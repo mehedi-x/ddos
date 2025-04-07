@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smart Popup Player</title>
+  <title>Ultra Popup Engine</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -19,12 +19,12 @@
       background: #111;
       color: #0f0;
       border: 1px solid #0f0;
+      font-size: 16px;
     }
 
     button:hover {
       background: #0f0;
       color: #000;
-      cursor: pointer;
     }
 
     .popup {
@@ -41,6 +41,14 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     .popup iframe, .popup video {
@@ -60,6 +68,7 @@
 
     #popupCount {
       font-size: 18px;
+      margin-top: 10px;
     }
 
     .loader {
@@ -79,10 +88,10 @@
   </style>
 </head>
 <body>
-  <h1>Smart Popup Player</h1>
-  <input type="text" id="link" placeholder="Paste any link">
-  <input type="number" id="count" placeholder="Popup count">
-  <button onclick="openPopups()">Open Popups</button>
+  <h1>Ultra Popup Engine</h1>
+  <input type="text" id="link" placeholder="Paste link here">
+  <input type="number" id="count" placeholder="Number of popups">
+  <button onclick="openPopups()">Launch</button>
   <div id="popupCount">Popups: 0</div>
 
   <script>
@@ -97,12 +106,13 @@
       const count = parseInt(document.getElementById('count').value);
 
       if (!rawUrl || isNaN(count) || count < 1) {
-        alert("Please enter valid link and popup number.");
+        alert("Please enter a valid link and number.");
         return;
       }
 
+      // Use delay to avoid browser overload
       for (let i = 0; i < count; i++) {
-        createPopup(rawUrl);
+        setTimeout(() => createPopup(rawUrl), i * 300); // 300ms interval per popup
       }
     }
 
@@ -134,7 +144,7 @@
         const embedUrl = convertToEmbed(url);
         const iframe = document.createElement('iframe');
         iframe.src = embedUrl;
-        iframe.allow = "autoplay";
+        iframe.allow = "autoplay; encrypted-media";
         popup.appendChild(iframe);
       }, 1500); // simulate loading time
     }
@@ -142,12 +152,12 @@
     function convertToEmbed(url) {
       if (url.includes("youtube.com/watch?v=")) {
         const videoId = url.split("v=")[1].split("&")[0];
-        return `https://www.youtube.com/embed/${videoId}`;
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
       }
 
       if (url.includes("youtu.be/")) {
         const videoId = url.split("youtu.be/")[1];
-        return `https://www.youtube.com/embed/${videoId}`;
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
       }
 
       if (url.includes("tiktok.com")) {
@@ -156,14 +166,14 @@
       }
 
       if (url.includes("facebook.com")) {
-        return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}`;
+        return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&autoplay=1&mute=1`;
       }
 
       if (url.includes("instagram.com/p/")) {
         return `${url}embed`;
       }
 
-      return url; // fallback for other sites
+      return url; // fallback
     }
   </script>
 </body>
