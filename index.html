@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Network Simulator (Educational)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            color: #34495e;
+        }
+        input, select {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        #status {
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        .log {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 6px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Network Simulator</h1>
+        <label for="target">Target URL:</label>
+        <input type="text" id="target" placeholder="e.g., http://localhost">
+        <label for="requests">Number of Requests:</label>
+        <input type="number" id="requests" min="1" max="100" value="10">
+        <label for="threads">Number of Threads:</label>
+        <input type="number" id="threads" min="1" max="10" value="2">
+        <button onclick="startSimulation()">Start Simulation</button>
+        <p id="status">Status: Ready</p>
+        <div class="log" id="log">Simulation Log:<br></div>
+    </div>
+
+    <script>
+        function startSimulation() {
+            const target = document.getElementById("target").value;
+            const requests = document.getElementById("requests").value;
+            const threads = document.getElementById("threads").value;
+            const status = document.getElementById("status");
+            const log = document.getElementById("log");
+
+            if (!target || !requests || !threads) {
+                status.innerText = "Status: Please fill all fields!";
+                return;
+            }
+
+            status.innerText = `Status: Starting simulation on ${target} with ${requests} requests and ${threads} threads...`;
+            log.innerHTML = "Simulation Log:<br>";
+
+            // সিমুলেশন ডেমো (আসল ব্যাকএন্ডে এটি Python দিয়ে হবে)
+            for (let i = 1; i <= requests; i++) {
+                setTimeout(() => {
+                    log.innerHTML += `Request ${i}: Simulated success<br>`;
+                }, i * 500);
+            }
+
+            setTimeout(() => {
+                status.innerText = "Status: Simulation completed (Educational purpose only).";
+            }, requests * 500 + 1000);
+        }
+    </script>
+</body>
+</html>
