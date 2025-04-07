@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Network Simulator (Educational)</title>
+    <title>Network Simulator (Educational)</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7fa;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,69 +15,71 @@
             margin: 0;
         }
         .container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            width: 500px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 450px;
             text-align: center;
         }
         h1 {
-            font-size: 28px;
-            color: #2c3e50;
+            font-size: 24px;
+            color: #1a1a1a;
             margin-bottom: 20px;
         }
         label {
             display: block;
             text-align: left;
             margin: 10px 0 5px;
-            color: #34495e;
+            color: #333;
         }
-        input, select {
+        input {
             width: 90%;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #dcdcdc;
-            border-radius: 6px;
-            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
         }
         button {
-            padding: 12px 25px;
-            background-color: #e74c3c;
+            padding: 10px 20px;
+            background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
         }
         button:hover {
-            background-color: #c0392b;
+            background-color: #218838;
         }
         #status {
             margin-top: 20px;
-            color: #7f8c8d;
+            color: #555;
             font-size: 14px;
-            word-wrap: break-word;
         }
         .log {
-            background-color: #ecf0f1;
+            background-color: #f8f9fa;
             padding: 10px;
-            border-radius: 6px;
-            max-height: 150px;
+            border-radius: 5px;
+            max-height: 200px;
             overflow-y: auto;
             margin-top: 20px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Advanced Network Simulator</h1>
+        <h1>Network Simulator</h1>
         <label for="target">Target URL:</label>
         <input type="text" id="target" placeholder="e.g., http://localhost">
         <label for="requests">Number of Requests:</label>
         <input type="number" id="requests" min="1" max="100" value="10">
         <label for="threads">Number of Threads:</label>
         <input type="number" id="threads" min="1" max="10" value="2">
+        <label for="proxy">Proxy (optional):</label>
+        <input type="text" id="proxy" placeholder="e.g., http://123.45.67.89:8080">
         <button onclick="startSimulation()">Start Simulation</button>
         <p id="status">Status: Ready</p>
         <div class="log" id="log">Simulation Log:<br></div>
@@ -88,27 +90,28 @@
             const target = document.getElementById("target").value;
             const requests = document.getElementById("requests").value;
             const threads = document.getElementById("threads").value;
+            const proxy = document.getElementById("proxy").value;
             const status = document.getElementById("status");
             const log = document.getElementById("log");
 
             if (!target || !requests || !threads) {
-                status.innerText = "Status: Please fill all fields!";
+                status.innerText = "Status: Please fill required fields!";
                 return;
             }
 
-            status.innerText = `Status: Starting simulation on ${target} with ${requests} requests and ${threads} threads...`;
+            status.innerText = `Status: Simulating ${requests} requests to ${target} with ${threads} threads...`;
             log.innerHTML = "Simulation Log:<br>";
 
-            // সিমুলেশন ডেমো (আসল ব্যাকএন্ডে এটি Python দিয়ে হবে)
+            // সিমুলেশন ডেমো
             for (let i = 1; i <= requests; i++) {
                 setTimeout(() => {
-                    log.innerHTML += `Request ${i}: Simulated success<br>`;
-                }, i * 500);
+                    log.innerHTML += `Request ${i}: Simulated success via ${proxy || "No Proxy"}<br>`;
+                }, i * 300);
             }
 
             setTimeout(() => {
                 status.innerText = "Status: Simulation completed (Educational purpose only).";
-            }, requests * 500 + 1000);
+            }, requests * 300 + 500);
         }
     </script>
 </body>
