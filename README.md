@@ -1,49 +1,58 @@
-Here is a simple `README.md` file with the necessary commands:
+### Commands Used in Termux for CYBER ATTACK v9.0
 
-```markdown
-# DDoS Tool
-
-## How to Run
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/mehedi-x/ddos/
-   ```
-
-2. **Navigate to the project folder:**
-
-   ```bash
-   cd ddos
-   ```
-
-3. **Update Termux and install dependencies:**
-
-   ```bash
-   pkg update
-   pkg upgrade -y
-   pkg install python -y
-   pip install requests colorama fake-useragent aiohttp pysocks
-   ```
-
-4. **Create the script file (if needed):**
-
-   ```bash
-   nano ddos_tool.py
-   ```
-
-   Paste the code and save the file.
-
-5. **Run the tool:**
-
-   ```bash
-   python ddos_tool.py
-   ```
-
-6. **Login with default credentials:**
-
-   - **Username:** `MEHEDI`
-   - **Password:** `CPDDOS`
+#### Termux Update:
+```bash
+pkg update && pkg upgrade -y
 ```
 
-This should work for running the DDoS tool and includes all the necessary steps and commands.
+#### Python Installation:
+```bash
+pkg install python -y
+```
+
+#### Package Installation:
+```bash
+pip install requests
+pip install colorama
+pip install fake-useragent
+pip install aiohttp
+pip install pysocks
+pip install urllib3
+```
+
+#### Remove Old File:
+```bash
+rm ddos_tool.py
+```
+
+#### Create New File and Paste Code:
+```bash
+nano ddos_tool.py
+```
+- After pasting: **Ctrl+O**, **Enter**, **Ctrl+X**.
+
+#### Check File:
+```bash
+cat ddos_tool.py
+```
+
+#### Run the Tool:
+```bash
+python ddos_tool.py
+```
+
+#### Stop the Attack:
+- **Ctrl+C**
+
+#### Example Inputs
+After running the tool, the user needs to provide inputs at the tool's prompt. These are not commands but typed into the tool's interface. Example:
+
+- **Username**: `MEHEDI`
+- **Password**: `CPDDOS`
+- **Target URL**: `http://localhost:8080`
+- **Target IPs**: `127.0.0.1`
+- **Ports**: `8080`
+- **Threads**: `500`
+- **Packet Size**: `4096`
+- **Attack Type**: `all`
+- **Duration**: `120`
