@@ -1,43 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gulder Premium Lager</title>
-  <meta name="description" content="Order Gulder Premium Lager via WhatsApp.">
-  <link rel="stylesheet" href="../style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulder Premium Beer - E-Store</title>
+    <meta name="description" content="Premium quality Gulder beer - refreshing and smooth taste for the discerning beer lover">
+    <meta name="keywords" content="beer, beverage, alcohol, gulder, premium, ecommerce, whatsapp">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i data-feather="shopping-bag" class="me-2"></i>
+                E-Store
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i data-feather="menu"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../cart.html">
+                            <i data-feather="shopping-cart" class="me-1"></i>
+                            Cart (<span id="cart-count">0</span>)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-secondary btn-sm ms-2" id="theme-toggle">
+                            <i data-feather="moon" id="theme-icon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-success" href="../admin.html">
+                            <i data-feather="settings" class="me-1"></i>
+                            Admin
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <header>
-    <div class="navbar">
-      <h1>Gulder Lager</h1>
-      <button id="menu-btn">☰</button>
-      <div class="nav-links">
-        <a href="../index.html">Home</a>
-        <label class="switch">
-          <input type="checkbox" id="theme-toggle">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-  </header>
+    <!-- Product Detail Section -->
+    <section class="py-5" style="margin-top: 80px;">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="../index.html#products">Products</a></li>
+                    <li class="breadcrumb-item"><span data-product="category">Beverages</span></li>
+                    <li class="breadcrumb-item active" aria-current="page">Gulder Premium Beer</li>
+                </ol>
+            </nav>
+            
+            <div class="row">
+                <!-- Product Image -->
+                <div class="col-lg-6 mb-4">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80" 
+                             alt="Gulder Premium Beer" class="product-detail-image w-100"
+                             data-product="image" onerror="this.src='https://via.placeholder.com/600x400?text=Gulder+Beer'">
+                    </div>
+                </div>
+                
+                <!-- Product Details -->
+                <div class="col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h1 class="h2 fw-bold mb-3" data-product="name">Gulder Premium Beer</h1>
+                            
+                            <p class="text-muted mb-2"><strong>Brand:</strong> <span data-product="brand">Gulder</span></p>
+                            <p class="text-muted mb-2"><strong>Category:</strong> <span data-product="category">Beverages</span></p>
+                            
+                            <div class="mb-4">
+                                <span class="product-price h3" data-product="price">$12.99</span>
+                                <span class="badge bg-success ms-2">In Stock (50)</span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5>Description</h5>
+                                <p class="text-muted" data-product="description">Premium quality Gulder beer with a refreshing and smooth taste. Perfect for relaxing moments and social gatherings. Brewed with the finest ingredients to deliver an exceptional beer experience.</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5>Features</h5>
+                                <ul class="product-features">
+                                    <li>Premium quality ingredients</li>
+                                    <li>Smooth and refreshing taste</li>
+                                    <li>Perfect for social occasions</li>
+                                    <li>Expertly brewed and tested</li>
+                                    <li>Authentic flavor profile</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-lg" onclick="addToCart('gulder')">
+                                    <i data-feather="shopping-cart" class="me-2"></i>
+                                    Add to Cart
+                                </button>
+                                <a href="../cart.html" class="btn btn-outline-secondary">
+                                    <i data-feather="eye" class="me-2"></i>
+                                    View Cart
+                                </a>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <i data-feather="truck" class="text-primary mb-2"></i>
+                                        <p class="small mb-0">Free Shipping</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <i data-feather="shield" class="text-primary mb-2"></i>
+                                        <p class="small mb-0">Secure Payment</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <i data-feather="message-circle" class="text-primary mb-2"></i>
+                                        <p class="small mb-0">WhatsApp Support</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-warning mt-3">
+                                <small><strong>Note:</strong> Must be 21+ to purchase. Please drink responsibly.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <main class="product-card" style="max-width:500px; margin:auto;">
-    <img src="https://i.ibb.co/k2YdNNz/gulder.jpg" alt="Gulder" />
-    <h2>Gulder Beer</h2>
-    <p><strong>Size:</strong> 500ml</p>
-    <p><strong>Alcohol:</strong> 5.2%</p>
-    <p><strong>Price:</strong> ৳250</p>
-    <button onclick="addToCart({id:'gulder',name:'Gulder Beer',price:250})">🛒 Add to Cart</button>
-    <a href="https://wa.me/8801627647776?text=I want to order Gulder Premium Lager (৳250)"
-       target="_blank" class="whatsapp-btn">📲 Order on WhatsApp</a>
-  </main>
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold">E-Store</h5>
+                    <p class="text-muted">Your trusted WhatsApp-based shopping destination.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted">&copy; 2025 E-Store. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-  <footer>
-    <p>&copy; 2025 SmartCart</p>
-  </footer>
-
-  <script src="../script.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../script.js"></script>
+    
+    <script>
+        // Initialize product page
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            updateCartCount();
+        });
+    </script>
 </body>
 </html>
