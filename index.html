@@ -11,18 +11,20 @@
 <body>
 
   <header>
-    <h1>🛍 SmartCart</h1>
-    <div class="header-right">
-      <label class="switch">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider round"></span>
-      </label>
-      <a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a>
+    <div class="navbar">
+      <h1>🛍 SmartCart</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider round"></span>
+        </label>
+      </div>
     </div>
   </header>
 
   <div id="loader"></div>
-
   <main id="product-grid" class="hidden"></main>
 
   <footer>

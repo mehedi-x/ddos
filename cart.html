@@ -10,13 +10,21 @@
 <body>
 
   <header>
-    <h1>Your Cart</h1>
-    <a href="index.html">← Continue Shopping</a>
+    <div class="navbar">
+      <h1>🛒 Your Cart</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
   </header>
 
   <main id="cart-items"></main>
 
-  <div id="cart-summary">
+  <div id="cart-summary" style="text-align:center; margin:20px;">
     <p>Total: <span id="cart-total">৳0</span></p>
     <a id="whatsapp-order-btn" href="#" target="_blank">📲 Order All on WhatsApp</a>
   </div>

@@ -1,25 +1,45 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  --bg: #f2f3f7;
+  --text: #222;
+  --header-bg: #121212;
+  --card-bg: #ffffff;
+}
+body.dark {
+  --bg: #121212;
+  --text: #f0f0f0;
+  --header-bg: #000000;
+  --card-bg: #1e1e1e;
+}
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: var(--bg, #f2f3f7);
-  color: var(--text, #222);
+  background: var(--bg);
+  color: var(--text);
   transition: background 0.3s, color 0.3s;
 }
-header, footer {
-  background-color: var(--header-bg, #121212);
+header {
+  background-color: var(--header-bg);
   color: white;
-  text-align: center;
   padding: 16px;
 }
-header .header-right {
+.navbar {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.navbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: bold;
 }
 #product-grid {
   display: grid;
@@ -28,10 +48,10 @@ header .header-right {
   padding: 20px;
 }
 .product-card {
-  background: white;
+  background: var(--card-bg);
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
 }
 .product-card img {
@@ -45,13 +65,14 @@ header .header-right {
 .product-card p {
   margin: 0;
 }
-.product-card button {
+.product-card button, .product-card a {
   margin-top: 10px;
   padding: 10px 14px;
   background: #25d366;
   color: white;
   border: none;
   border-radius: 5px;
+  text-decoration: none;
 }
 .switch {
   position: relative;
@@ -90,9 +111,14 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(16px);
 }
+footer {
+  background-color: var(--header-bg);
+  color: white;
+  text-align: center;
+  padding: 16px;
+  margin-top: 20px;
+}
 #loader {
-  display: block;
-  width: 100%;
   text-align: center;
   padding: 40px;
 }
@@ -102,16 +128,3 @@ input:checked + .slider:before {
   color: gray;
 }
 .hidden { display: none; }
-#cart-summary {
-  text-align: center;
-  margin: 20px;
-}
-#cart-summary a {
-  display: inline-block;
-  margin-top: 10px;
-  background: #25d366;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-}
