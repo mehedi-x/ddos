@@ -8,44 +8,71 @@
   <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
+  <header class="header">
     <div class="container header-flex">
       <div class="logo" tabindex="0">আমার স্টোর</div>
       <nav id="nav-menu" class="nav-menu" aria-label="মূল ন্যাভিগেশন">
         <ul>
-          <li><a href="#products">প্রোডাক্টসমূহ</a></li>
-          <li><a href="#order-section">অর্ডার</a></li>
+          <li><a href="index.html" aria-current="page">হোম</a></li>
+          <li><a href="#about">আমাদের সম্পর্কে</a></li>
+          <li><a href="#contact">যোগাযোগ</a></li>
+          <li><a href="#privacy">প্রাইভেসি পলিসি</a></li>
         </ul>
       </nav>
-      <button aria-label="নেভিগেশন টগল" id="menu-toggle" aria-expanded="false" aria-controls="nav-menu">☰</button>
-      <button aria-label="ডার্ক/লাইট মোড পরিবর্তন" id="mode-toggle" title="ডার্ক / লাইট মোড">🌙</button>
+      <button id="menu-toggle" aria-label="নেভিগেশন টগল" aria-expanded="false" aria-controls="nav-menu" class="menu-btn">
+        <img src="icons/menu.svg" alt="মেনু আইকন" />
+      </button>
+      <button id="mode-toggle" aria-label="ডার্ক/লাইট মোড পরিবর্তন" title="ডার্ক / লাইট মোড" class="mode-btn">
+        🌙
+      </button>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container main-content">
     <section id="products" class="products-section">
       <h1>আমাদের প্রোডাক্টসমূহ</h1>
-      <div id="product-list" class="product-list" role="list" aria-live="polite"></div>
+      <div class="product-list">
+        <article class="product-card">
+          <a href="products/headphone.html" aria-label="হেডফোন বিস্তারিত দেখুন">
+            <img src="products/headphone.jpg" alt="হেডফোন" loading="lazy" />
+            <h3 class="product-name">হেডফোন</h3>
+          </a>
+          <p class="product-price">২৫০০ টাকা</p>
+          <a href="products/headphone.html" class="btn buy-btn" aria-label="হেডফোন কিনুন">কিনুন</a>
+        </article>
+        <article class="product-card">
+          <a href="products/watch.html" aria-label="ওয়াচ বিস্তারিত দেখুন">
+            <img src="products/watch.jpg" alt="ওয়াচ" loading="lazy" />
+            <h3 class="product-name">ওয়াচ</h3>
+          </a>
+          <p class="product-price">৩৫০০ টাকা</p>
+          <a href="products/watch.html" class="btn buy-btn" aria-label="ওয়াচ কিনুন">কিনুন</a>
+        </article>
+        <article class="product-card">
+          <a href="products/wallet.html" aria-label="ওয়ালেট বিস্তারিত দেখুন">
+            <img src="products/wallet.jpg" alt="ওয়ালেট" loading="lazy" />
+            <h3 class="product-name">ওয়ালেট</h3>
+          </a>
+          <p class="product-price">১৫০০ টাকা</p>
+          <a href="products/wallet.html" class="btn buy-btn" aria-label="ওয়ালেট কিনুন">কিনুন</a>
+        </article>
+      </div>
     </section>
 
-    <section id="order-section" class="order-section hidden" aria-live="assertive">
-      <h2>অর্ডার ফর্ম</h2>
-      <form id="order-form" novalidate>
-        <label for="customer-name">নাম <span aria-hidden="true">*</span></label>
-        <input type="text" id="customer-name" name="customer-name" placeholder="আপনার নাম" required autocomplete="name" />
+    <section id="about" class="info-section">
+      <h2>আমাদের সম্পর্কে</h2>
+      <p>আমাদের স্টোর আপনাদের জন্য সেরা মানের প্রোডাক্ট এবং সেবা দিয়ে থাকে।</p>
+    </section>
 
-        <label for="customer-address">ঠিকানা <span aria-hidden="true">*</span></label>
-        <textarea id="customer-address" name="customer-address" rows="3" placeholder="আপনার ঠিকানা" required></textarea>
+    <section id="contact" class="info-section">
+      <h2>যোগাযোগ</h2>
+      <p>ইমেইল: info@amarstore.com</p>
+      <p>ফোন: +8801712345678</p>
+    </section>
 
-        <label for="customer-phone">মোবাইল নাম্বার <span aria-hidden="true">*</span></label>
-        <input type="tel" id="customer-phone" name="customer-phone" placeholder="০১xxxxxxxxx" pattern="^(01[0-9]{9})$" required autocomplete="tel" />
-
-        <input type="hidden" id="product-name" name="product-name" value="" />
-
-        <button type="submit" class="btn btn-submit">কিনুন</button>
-        <button type="button" id="order-cancel" class="btn btn-cancel">বাতিল</button>
-      </form>
-      <div id="confirmation-message" class="confirmation-message hidden" role="alert"></div>
+    <section id="privacy" class="info-section">
+      <h2>প্রাইভেসি পলিসি</h2>
+      <p>আমাদের ওয়েবসাইটে আপনার ব্যক্তিগত তথ্য সম্পূর্ণ গোপন রাখা হয়।</p>
     </section>
   </main>
 
