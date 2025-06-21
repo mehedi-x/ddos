@@ -12,24 +12,32 @@
   <header>
     <div class="navbar">
       <h1>Gulder Lager</h1>
+      <button id="menu-btn">☰</button>
       <div class="nav-links">
         <a href="../index.html">Home</a>
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle">
+          <span class="slider round"></span>
+        </label>
       </div>
     </div>
   </header>
 
-  <main class="product-card">
+  <main class="product-card" style="max-width:500px; margin:auto;">
     <img src="https://i.ibb.co/k2YdNNz/gulder.jpg" alt="Gulder" />
     <h2>Gulder Beer</h2>
-    <p>Size: 500ml | Alcohol: 5.2%</p>
-    <p>Price: ৳250</p>
+    <p><strong>Size:</strong> 500ml</p>
+    <p><strong>Alcohol:</strong> 5.2%</p>
+    <p><strong>Price:</strong> ৳250</p>
+    <button onclick="addToCart({id:'gulder',name:'Gulder Beer',price:250})">🛒 Add to Cart</button>
     <a href="https://wa.me/8801627647776?text=I want to order Gulder Premium Lager (৳250)"
-       target="_blank">📲 Order on WhatsApp</a>
+       target="_blank" class="whatsapp-btn">📲 Order on WhatsApp</a>
   </main>
 
   <footer>
     <p>&copy; 2025 SmartCart</p>
   </footer>
 
+  <script src="../script.js"></script>
 </body>
 </html>
