@@ -1,105 +1,26 @@
-// Elements
-const menuToggle = document.getElementById('menu-toggle');
-const navMenu = document.getElementById('nav-menu');
-const modeToggle = document.getElementById('mode-toggle');
-const orderBtn = document.getElementById('order-btn');
-const orderSection = document.getElementById('order-section');
-const orderForm = document.getElementById('order-form');
-const orderCancel = document.getElementById('order-cancel');
-const confirmationMessage = document.getElementById('confirmation-message');
+// এই স্ক্রিপ্ট products/ ফোল্ডার স্ক্যান করে HTML লোড করে
+const productList = [
+  {
+    file: "gulder.html",
+    name: "Gulder Beer",
+    price: "৳250",
+    image: "products/gulder.jpg"
+  },
+  // এখানে আপনি যত খুশি প্রোডাক্ট অ্যাড করতে পারবেন
+];
 
-// Mobile menu toggle
-if(menuToggle && navMenu){
-  menuToggle.addEventListener('click', () => {
-    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', !expanded);
-    navMenu.classList.toggle('open');
-  });
-}
+const grid = document.getElementById("product-grid");
 
-// Dark mode toggle
-const preferredDark = window.matchMedia('(prefers-color-scheme: dark)');
-function setTheme(theme) {
-  if(theme === 'dark') {
-    document.body.classList.add('dark');
-    modeToggle.textContent = '☀️';
-    modeToggle.title = 'লাইট মোড চালু করুন';
-  } else {
-    document.body.classList.remove('dark');
-    modeToggle.textContent = '🌙';
-    modeToggle.title = 'ডার্ক মোড চালু করুন';
-  }
-  localStorage.setItem('theme', theme);
-}
+productList.forEach(product => {
+  const card = document.createElement("div");
+  card.className = "product-card";
 
-const savedTheme = localStorage.getItem('theme');
-if(savedTheme) setTheme(savedTheme);
-else setTheme(preferredDark.matches ? 'dark' : 'light');
+  card.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+    <h2>${product.name}</h2>
+    <p>Price: ${product.price}</p>
+    <a href="products/${product.file}">View</a>
+  `;
 
-if(modeToggle){
-  modeToggle.addEventListener('click', () => {
-    const isDark = document.body.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
-  });
-}
-
-// Show order form when user clicks "অর্ডার করুন" button on product page
-if(orderBtn && orderSection && orderForm){
-  orderBtn.addEventListener('click', () => {
-    orderSection.classList.remove('hidden');
-    confirmationMessage.classList.add('hidden');
-    orderForm.classList.remove('hidden');
-    orderForm.reset();
-    orderForm['customer-name'].focus();
-
-    // Scroll smoothly to order section
-    orderSection.scrollIntoView({behavior: 'smooth'});
-  });
-
-  // Cancel order
-  orderCancel.addEventListener('click', () => {
-    orderSection.classList.add('hidden');
-    confirmationMessage.classList.add('hidden');
-    orderForm.classList.remove('hidden');
-  });
-
-  // Handle order form submission and open WhatsApp
-  orderForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    if(!orderForm.checkValidity()){
-      orderForm.reportValidity();
-      return;
-    }
-
-    const name = orderForm['customer-name'].value.trim();
-    const address = orderForm['customer-address'].value.trim();
-    const phone = orderForm['customer-phone'].value.trim();
-    const product = orderForm['product-name'] ? orderForm['product-name'].value : document.title.replace(' – আমার স্টোর', '');
-
-    // Your WhatsApp number with country code (example for Bangladesh, change as needed)
-    const whatsappNumber = '8801712345678';
-
-    const message = `হ্যালো, আমি অর্ডার করতে চাই:\n\n` +
-      `প্রোডাক্ট: ${product}\n` +
-      `নাম: ${name}\n` +
-      `ঠিকানা: ${address}\n` +
-      `মোবাইল: ${phone}`;
-
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
-    confirmationMessage.textContent = 'আপনার অর্ডারটি WhatsApp এ পাঠানো হচ্ছে...';
-    confirmationMessage.classList.remove('hidden');
-    orderForm.classList.add('hidden');
-
-    window.open(url, '_blank');
-
-    // Hide order form after delay
-    setTimeout(() => {
-      orderSection.classList.add('hidden');
-      confirmationMessage.classList.add('hidden');
-      orderForm.classList.remove('hidden');
-      orderForm.reset();
-    }, 7000);
-  });
-}
+  grid.appendChild(card);
+});
