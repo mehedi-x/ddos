@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>হেডফোন – আমার স্টোর</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="../script.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-flex">
+      <div class="logo"><a href="../index.html" tabindex="0" class="logo-link">আমার স্টোর</a></div>
+      <nav id="nav-menu" class="nav-menu" aria-label="মূল ন্যাভিগেশন">
+        <ul>
+          <li><a href="../index.html">হোম</a></li>
+          <li><a href="../index.html#about">আমাদের সম্পর্কে</a></li>
+          <li><a href="../index.html#contact">যোগাযোগ</a></li>
+          <li><a href="../index.html#privacy">প্রাইভেসি পলিসি</a></li>
+        </ul>
+      </nav>
+      <button id="menu-toggle" aria-label="নেভিগেশন টগল" aria-expanded="false" aria-controls="nav-menu" class="menu-btn">
+        <img src="../icons/menu.svg" alt="মেনু আইকন" />
+      </button>
+      <button id="mode-toggle" aria-label="ডার্ক/লাইট মোড পরিবর্তন" title="ডার্ক / লাইট মোড" class="mode-btn">
+        🌙
+      </button>
+    </div>
+  </header>
+
+  <main class="container product-detail">
+    <article class="product-detail-card">
+      <img src="headphone.jpg" alt="হেডফোন" loading="lazy" class="product-detail-img" />
+      <div class="product-detail-info">
+        <h1>হেডফোন</h1>
+        <p class="product-price">২৫০০ টাকা</p>
+        <p class="product-description">
+          উন্নতমানের সাউন্ডের হেডফোন, আরামদায়ক ডিজাইন এবং দীর্ঘস্থায়ী ব্যাটারি লাইফ সহ।</p>
+        <button id="order-btn" class="btn buy-btn">অর্ডার করুন</button>
+      </div>
+    </article>
+
+    <section id="order-section" class="order-section hidden" aria-live="polite">
+      <h2>অর্ডার ফর্ম</h2>
+      <form id="order-form" novalidate>
+        <label for="customer-name">নাম <span aria-hidden="true">*</span></label>
+        <input type="text" id="customer-name" name="customer-name" placeholder="আপনার নাম" required autocomplete="name" />
+
+        <label for="customer-address">ঠিকানা <span aria-hidden="true">*</span></label>
+        <textarea id="customer-address" name="customer-address" rows="3" placeholder="আপনার ঠিকানা" required></textarea>
+
+        <label for="customer-phone">মোবাইল নাম্বার <span aria-hidden="true">*</span></label>
+        <input type="tel" id="customer-phone" name="customer-phone" placeholder="০১xxxxxxxxx" pattern="^(01[0-9]{9})$" required autocomplete="tel" />
+
+        <input type="hidden" id="product-name" name="product-name" value="হেডফোন" />
+
+        <button type="submit" class="btn btn-submit">কিনুন</button>
+        <button type="button" id="order-cancel" class="btn btn-cancel">বাতিল</button>
+      </form>
+      <div id="confirmation-message" class="confirmation-message hidden" role="alert"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-flex">
+      <p>© ২০২৪ আমার স্টোর। সর্বস্বত্ব সংরক্ষিত।</p>
+    </div>
+  </footer>
+</body>
+</html>
