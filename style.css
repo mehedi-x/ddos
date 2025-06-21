@@ -1,54 +1,117 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f9f9f9;
-  color: #333;
+  background: var(--bg, #f2f3f7);
+  color: var(--text, #222);
+  transition: background 0.3s, color 0.3s;
 }
-
 header, footer {
-  background: #111;
+  background-color: var(--header-bg, #121212);
   color: white;
   text-align: center;
-  padding: 15px;
+  padding: 16px;
 }
-
-#product-grid {
+header .header-right {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+#product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   padding: 20px;
 }
-
 .product-card {
-  width: 250px;
-  margin: 10px;
-  padding: 15px;
   background: white;
+  padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
   text-align: center;
 }
-
 .product-card img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
 }
-
 .product-card h2 {
   font-size: 18px;
   margin: 10px 0 5px;
 }
-
 .product-card p {
   margin: 0;
 }
-
-.product-card a {
+.product-card button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #25d366;
+}
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+#loader {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 40px;
+}
+#loader::after {
+  content: "⏳ Loading...";
+  font-size: 18px;
+  color: gray;
+}
+.hidden { display: none; }
+#cart-summary {
+  text-align: center;
+  margin: 20px;
+}
+#cart-summary a {
   display: inline-block;
   margin-top: 10px;
   background: #25d366;
   color: white;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   text-decoration: none;
 }
