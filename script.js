@@ -1,104 +1,133 @@
-// Toggle mobile menu
-const menuToggleBtn = document.getElementById('menu-toggle');
+// DOM Elements
+const menuToggle = document.getElementById('menu-toggle');
 const navMenu = document.getElementById('nav-menu');
-
-menuToggleBtn.addEventListener('click', () => {
-    const expanded = menuToggleBtn.getAttribute('aria-expanded') === 'true' || false;
-    menuToggleBtn.setAttribute('aria-expanded', !expanded);
-    navMenu.classList.toggle('open');
-});
-
-// Toggle dark/light mode
-const modeToggleBtn = document.getElementById('mode-toggle');
-const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-function getStoredTheme() {
-    return localStorage.getItem('theme');
-}
-
-function applyTheme(theme) {
-    if (theme === 'dark') {
-        document.body.classList.add('dark');
-        modeToggleBtn.textContent = '☀️';
-        modeToggleBtn.title = 'লাইট মোড চালু করুন';
-    } else {
-        document.body.classList.remove('dark');
-        modeToggleBtn.textContent = '🌙';
-        modeToggleBtn.title = 'ডার্ক মোড চালু করুন';
-    }
-}
-
-// Initialize theme on page load
-(function initTheme() {
-    const savedTheme = getStoredTheme();
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else {
-        // If user prefers dark by OS default
-        applyTheme(prefersDarkScheme.matches ? 'dark' : 'light');
-    }
-})();
-
-modeToggleBtn.addEventListener('click', () => {
-    const isDark = document.body.classList.contains('dark');
-    if (isDark) {
-        applyTheme('light');
-        localStorage.setItem('theme', 'light');
-    } else {
-        applyTheme('dark');
-        localStorage.setItem('theme', 'dark');
-    }
-});
-
-// Order form show/hide logic
-const orderButtons = document.querySelectorAll('.order-btn');
+const modeToggle = document.getElementById('mode-toggle');
+const productList = document.getElementById('product-list');
 const orderSection = document.getElementById('order-section');
 const orderForm = document.getElementById('order-form');
-const thankYouMessage = document.getElementById('thankyou-message');
-const formCloseBtn = document.getElementById('form-close');
+const orderCancel = document.getElementById('order-cancel');
+const confirmationMessage = document.getElementById('confirmation-message');
+const productNameInput = document.getElementById('product-name');
 
-// Show order form when clicking any "অর্ডার করুন" button
-orderButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        orderSection.classList.remove('hidden');
-        thankYouMessage.classList.add('hidden');
-        orderForm.classList.remove('hidden');
-        orderForm.reset();
-        orderForm.scrollIntoView({ behavior: 'smooth' });
+// Mobile menu toggle
+menuToggle.addEventListener('click', () => {
+  const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+  menuToggle.setAttribute('aria-expanded', !expanded);
+  navMenu.classList.toggle('open');
+});
 
-        // Autofill message with product name
-        const productCard = btn.closest('.product-card');
-        const productName = productCard.querySelector('h2').textContent;
-        const messageTextarea = orderForm.querySelector('#message');
-        messageTextarea.value = `আমি ${productName} অর্ডার করতে চাই।`;
-        
-        // Open mobile menu closed if open (optional UX)
-        if(navMenu.classList.contains('open')){
-          navMenu.classList.remove('open');
-          menuToggleBtn.setAttribute('aria-expanded', 'false');
-        }
+// Dark/light mode toggle
+const preferredDark = window.matchMedia('(prefers-color-scheme: dark)');
+function setTheme(theme) {
+  if(theme === 'dark') {
+    document.body.classList.add('dark');
+    modeToggle.textContent = '☀️';
+    modeToggle.title = 'লাইট মোড চালু করুন';
+  } else {
+    document.body.classList.remove('dark');
+    modeToggle.textContent = '🌙';
+    modeToggle.title = 'ডার্ক মোড চালু করুন';
+  }
+  localStorage.setItem('theme', theme);
+}
+
+(function initTheme(){
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme) setTheme(savedTheme);
+  else setTheme(preferredDark.matches ? 'dark' : 'light');
+})();
+
+modeToggle.addEventListener('click', () => {
+  const isDark = document.body.classList.contains('dark');
+  setTheme(isDark ? 'light' : 'dark');
+});
+
+
+// Fetch product data and render dynamically
+fetch('products/products.json')
+  .then(response => response.json())
+  .then(products => {
+    if(!Array.isArray(products)) return;
+    productList.innerHTML = '';
+    products.forEach(product => {
+      const productCard = document.createElement('article');
+      productCard.className = 'product-card';
+      productCard.setAttribute('tabindex', '0');
+      productCard.innerHTML = `
+        <img src="products/${product.image}" alt="${product.name}" loading="lazy" />
+        <div class="product-info">
+          <h3 class="product-name">${product.name}</h3>
+          <p class="product-desc">${product.description}</p>
+          <button type="button" class="buy-btn" aria-label="${product.name} কিনুন বাটন">${product.price} - কিনুন</button>
+        </div>
+      `;
+      // Add event listener to buy button
+      productCard.querySelector('.buy-btn').addEventListener('click', () => {
+        openOrderSection(product.name);
+      });
+      productList.appendChild(productCard);
     });
+  })
+  .catch(err => {
+    productList.innerHTML = '<p style="text-align:center;color:#cc0000;">প্রোডাক্ট লোড করতে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।</p>';
+    console.error(err);
+  });
+
+function openOrderSection(productName) {
+  orderSection.classList.remove('hidden');
+  confirmationMessage.classList.add('hidden');
+  orderForm.classList.remove('hidden');
+  orderForm.reset();
+  productNameInput.value = productName;
+  orderSection.scrollIntoView({behavior: 'smooth'});
+  orderForm['customer-name'].focus();
+}
+
+// Cancel order form
+orderCancel.addEventListener('click', () => {
+  orderSection.classList.add('hidden');
+  confirmationMessage.classList.add('hidden');
+  orderForm.classList.remove('hidden');
 });
 
-formCloseBtn.addEventListener('click', () => {
-    orderSection.classList.add('hidden');
-    thankYouMessage.classList.add('hidden');
-    orderForm.classList.remove('hidden');
-});
-
-// Form submission handler
+// Handle order submission
 orderForm.addEventListener('submit', e => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Basic validation
-    if(!orderForm.checkValidity()){
-        orderForm.reportValidity();
-        return;
-    }
+  if(!orderForm.checkValidity()) {
+    orderForm.reportValidity();
+    return;
+  }
 
-    // Show thank you message and hide form
-    orderForm.classList.add('hidden');
-    thankYouMessage.textContent = `${orderForm.name.value}님, আপনার অর্ডার গ্রহণ করা হয়েছে। ধন্যবাদ!`;
-    thankYouMessage.classList.remove('hidden');
-    thankYouMessage.focus();
+  // Construct WhatsApp message
+  const name = orderForm['customer-name'].value.trim();
+  const address = orderForm['customer-address'].value.trim();
+  const phone = orderForm['customer-phone'].value.trim();
+  const product = orderForm['product-name'].value;
+
+  // Basic phone validation message indicates Bangladeshi mobile number 01XXXXXXXXX
+  const whatsappNumber = '8801712345678'; // <-- আপনার WhatsApp নম্বর এখানে প্রবেশ করান (দেশের কোডসহ, যেমন বাংলাদেশ=+880)
+
+  const message = `হ্যালো, আমি অর্ডার করতে চাই:\n\n` +
+                  `প্রোডাক্ট: ${product}\n` +
+                  `নাম: ${name}\n` +
+                  `ঠিকানা: ${address}\n` +
+                  `মোবাইল: ${phone}`;
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  
+  // Open WhatsApp link in new tab/window while showing confirmation
+  confirmationMessage.textContent = 'আপনার অর্ডারটি WhatsApp এ পাঠানো হচ্ছে...';
+  confirmationMessage.classList.remove('hidden');
+  orderForm.classList.add('hidden');
+
+  window.open(url, '_blank');
+
+  // Optionally reset form after few seconds or wait for user to close
+  setTimeout(() => {
+    orderSection.classList.add('hidden');
+    confirmationMessage.classList.add('hidden');
+    orderForm.classList.remove('hidden');
+    orderForm.reset();
+  }, 8000);
 });
