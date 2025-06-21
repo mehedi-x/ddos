@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartCart Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="admin.js"></script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <h1>🛠 Admin Panel</h1>
+    </div>
+  </header>
+
+  <main style="max-width:800px; margin:auto; padding:20px;">
+    <div id="password-check">
+      <h2>🔐 Enter Admin Password</h2>
+      <input type="password" id="admin-pass" placeholder="Enter password" />
+      <button onclick="checkPassword()">Login</button>
+      <p id="wrong-pass" style="color:red;"></p>
+    </div>
+
+    <div id="admin-area" style="display:none;">
+      <h2>📦 Add New Product</h2>
+      <label>Product Name <input type="text" id="pname"></label><br/>
+      <label>Price (৳) <input type="number" id="pprice"></label><br/>
+      <label>Category <input type="text" id="pcategory"></label><br/>
+      <label>Status 
+        <select id="pstatus">
+          <option value="Active">Active</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+      </label><br/>
+      <label>Description<br/>
+        <textarea id="pdesc" rows="4" cols="50"></textarea>
+      </label><br/>
+      <label>Image URLs (comma-separated) <input type="text" id="pimages"></label><br/>
+
+      <button onclick="generateHTML()">🚀 Generate Product HTML</button>
+
+      <h3>📄 Product HTML Code:</h3>
+      <textarea id="output" rows="20" style="width:100%;"></textarea>
+      <button onclick="downloadHTML()">⬇️ Download .html File</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 SmartCart Admin</p>
+  </footer>
+</body>
+</html>
