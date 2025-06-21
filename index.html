@@ -1,80 +1,58 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ই-কমার্স ওয়েবসাইট</title>
-    <link rel="stylesheet" href="style.css" />
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>আমার প্রফেশনাল ই-কমার্স স্টোর</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <div class="container header-container">
-            <div class="logo">আমার স্টোর</div>
-            <nav id="nav-menu" class="nav-menu">
-                <ul>
-                    <li><a href="#products">প্রোডাক্ট</a></li>
-                    <li><a href="#order-section">অর্ডার</a></li>
-                </ul>
-            </nav>
-            <button id="menu-toggle" aria-label="মেনু টগল" aria-expanded="false" aria-controls="nav-menu">☰</button>
-            <button id="mode-toggle" aria-label="ডার্ক/লাইট মোড টগল" title="ডার্ক / লাইট মোড">🌙</button>
-        </div>
-    </header>
+  <header>
+    <div class="container header-flex">
+      <div class="logo" tabindex="0">আমার স্টোর</div>
+      <nav id="nav-menu" class="nav-menu" aria-label="মূল ন্যাভিগেশন">
+        <ul>
+          <li><a href="#products">প্রোডাক্টসমূহ</a></li>
+          <li><a href="#order-section">অর্ডার</a></li>
+        </ul>
+      </nav>
+      <button aria-label="নেভিগেশন টগল" id="menu-toggle" aria-expanded="false" aria-controls="nav-menu">☰</button>
+      <button aria-label="ডার্ক/লাইট মোড পরিবর্তন" id="mode-toggle" title="ডার্ক / লাইট মোড">🌙</button>
+    </div>
+  </header>
 
-    <main>
-        <section id="products" class="products container">
-            <h1>প্রোডাক্টসমূহ</h1>
-            <div class="product-list">
-                <article class="product-card">
-                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" alt="Headphone" />
-                    <h2>হেডফোন</h2>
-                    <p>উন্নতমানের সাউন্ডের হেডফোন।</p>
-                    <button class="order-btn">অর্ডার করুন</button>
-                </article>
+  <main class="container">
+    <section id="products" class="products-section">
+      <h1>আমাদের প্রোডাক্টসমূহ</h1>
+      <div id="product-list" class="product-list" role="list" aria-live="polite"></div>
+    </section>
 
-                <article class="product-card">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80" alt="Watch" />
-                    <h2>ওয়াচ</h2>
-                    <p>স্টাইলিশ ডিজাইনের স্মার্ট ওয়াচ।</p>
-                    <button class="order-btn">অর্ডার করুন</button>
-                </article>
+    <section id="order-section" class="order-section hidden" aria-live="assertive">
+      <h2>অর্ডার ফর্ম</h2>
+      <form id="order-form" novalidate>
+        <label for="customer-name">নাম <span aria-hidden="true">*</span></label>
+        <input type="text" id="customer-name" name="customer-name" placeholder="আপনার নাম" required autocomplete="name" />
 
-                <article class="product-card">
-                    <img src="https://images.unsplash.com/photo-1506812574058-fc75fa93fead?auto=format&fit=crop&w=400&q=80" alt="Wallet" />
-                    <h2>ওয়ালেট</h2>
-                    <p>টেকসই এবং ফ্যাশনেবল ওয়ালেট।</p>
-                    <button class="order-btn">অর্ডার করুন</button>
-                </article>
-            </div>
-        </section>
+        <label for="customer-address">ঠিকানা <span aria-hidden="true">*</span></label>
+        <textarea id="customer-address" name="customer-address" rows="3" placeholder="আপনার ঠিকানা" required></textarea>
 
-        <section id="order-section" class="order-section container hidden">
-            <h1>অর্ডার ফর্ম</h1>
-            <form id="order-form" novalidate>
-                <label for="name">নাম <span aria-hidden="true">*</span></label>
-                <input type="text" id="name" name="name" required placeholder="আপনার নাম" />
+        <label for="customer-phone">মোবাইল নাম্বার <span aria-hidden="true">*</span></label>
+        <input type="tel" id="customer-phone" name="customer-phone" placeholder="০১xxxxxxxxx" pattern="^(01[0-9]{9})$" required autocomplete="tel" />
 
-                <label for="address">ঠিকানা <span aria-hidden="true">*</span></label>
-                <textarea id="address" name="address" required placeholder="আপনার ঠিকানা"></textarea>
+        <input type="hidden" id="product-name" name="product-name" value="" />
 
-                <label for="email">ইমেইল <span aria-hidden="true">*</span></label>
-                <input type="email" id="email" name="email" required placeholder="আপনার ইমেইল" />
+        <button type="submit" class="btn btn-submit">কিনুন</button>
+        <button type="button" id="order-cancel" class="btn btn-cancel">বাতিল</button>
+      </form>
+      <div id="confirmation-message" class="confirmation-message hidden" role="alert"></div>
+    </section>
+  </main>
 
-                <label for="message">মেসেজ</label>
-                <textarea id="message" name="message" placeholder="আপনার মেসেজ (ঐচ্ছিক)"></textarea>
-
-                <button type="submit">সাবমিট</button>
-                <button type="button" id="form-close">ক্যন্সেল</button>
-            </form>
-            <div id="thankyou-message" class="thankyou-message hidden" role="alert"></div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container footer-container">
-            <p>© ২০২৪ আমার স্টোর। সব অধিকার সংরক্ষিত।</p>
-        </div>
-    </footer>
+  <footer>
+    <div class="container footer-flex">
+      <p>© ২০২৪ আমার স্টোর। সর্বস্বত্ব সংরক্ষিত।</p>
+    </div>
+  </footer>
 </body>
 </html>
